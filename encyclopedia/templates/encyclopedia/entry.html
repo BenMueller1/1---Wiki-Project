@@ -1,10 +1,12 @@
 {% extends "encyclopedia/layout.html" %}
+{% load static %}
+
 
 {% block title %}
     {{name}}
 {% endblock %}
 
 {% block body %}
-    {{content}}
+    {{content | safe}}
     <a href="{{name}}/editPage">Edit this page</a>
-{% endblock %}
+{% endblock %}  

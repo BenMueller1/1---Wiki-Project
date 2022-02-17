@@ -19,6 +19,29 @@ class editPageForm(forms.Form):
 
 
 def index(request):
+    if request.method == "POST":  # this will run if the search bar has been used
+        entryTitle = request.POST['q']
+        caseInsensitiveEntryList = util.list_entries()
+        for i in range(len(caseInsensitiveEntryList)):
+            caseInsensitiveEntryList[i] = caseInsensitiveEntryList[i].lower()
+
+        if entryTitle in caseInsensitiveEntryList:
+            e = util.get_entry(entryTitle)
+            context = {"name": entryTitle}
+            markdowner = Markdown()
+            html = markdowner.convert(e)        
+            context['content'] = html
+            return render(request, "encyclopedia/entry.html", context)
+
+        else: # display a search results page that has entry titles with matching substrings
+            # need to display a list of links to pages whose titles have entryTitle as a substring
+            results = []
+            for title in util.list_entries():
+                if entryTitle.lower() in title.lower():
+                    results.append(title)
+            context = {"results": results}
+            return render(request, "encyclopedia/searchResults.html", context)
+    
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })

@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <form action="" method="post">   <!-- IS THIS THE CORRECT action? Should it just be sent here?-->
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
-    </form>
+    <div class="col-8 m-2 row-2">
+        <form action="" method="post">   <!-- IS THIS THE CORRECT action? Should it just be sent here?-->
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock %}
